@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewData["Title"] = "AddTask";
+}
+<h4>Add Task</h4>
+<p class="text-danger">@ViewData["TaskNotAdded"]</p>
+<div>
+    <form action="/Task/AddTask" method="post">
+        <div>
+            <label for="Description">Description</label>
+            <input type="text" name="Description" maxlength="200" placeholder="Description" required />
+        </div>
+        <div>
+            <label for="DueDate">DueDate</label>
+            <input type="date" name="DueDate" min="@DateTime.Now.ToString("yyyy-MM-dd")" required />
+        </div>
+        <div>
+            <input type="submit" value="Submit!" />
+        </div>
+    </form>
+</div>

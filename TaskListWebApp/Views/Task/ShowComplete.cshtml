@@ -1,0 +1,74 @@
+﻿
+@{
+    ViewData["Title"] = "TaskIndex";
+}
+
+@model List<Tasks>
+<h1>Completed tasks</h1>
+<p class="text-danger">@ViewBag.TaskNotAdded</p>
+@{
+
+    int i = 0;
+    @foreach (Tasks t in Model)
+    {
+        if (t.Complete)
+        {
+            i++;
+        }
+    }
+}
+@if (i == 0)
+{
+    <p class="text-danger">Your tasklist is empty.</p>
+    <p><a href="/Task/AddTask">Click here to add your first task!</a></p>
+}
+else
+{
+    <p><a href="/Task/TaskIndex">Show all tasks</a></p>
+    <table width="50%">
+        <tr>
+            <th>
+                Description
+            </th>
+            <th>
+                Due Date
+            </th>
+            <th>
+                Status
+            </th>
+            <th>
+                Toggle Completion
+            </th>
+            <th>
+                Delete
+            </th>
+        </tr>
+        @foreach (Tasks t in Model)
+        {
+            if (t.Complete)
+            {
+                <tr>
+                    <td>
+                        @t.Description
+                    </td>
+                    <td>
+                        @t.DueDate.ToShortDateString()
+                    </td>
+                    <td>Complete</td>
+                    <td>
+                        <form action="/Task/ToggleStatus?id=@t.Id" method="post">
+                            <input type="submit" value="Change Status" />
+                        </form>
+                    </td>
+                    <td>
+                        <form action="/Task/DeleteTask?id=@t.Id" method="post">
+                            <input type="submit" value="Delete" />
+                        </form>
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+    <p><a href="/Task/AddTask">Add another task.</a></p>
+
+}
